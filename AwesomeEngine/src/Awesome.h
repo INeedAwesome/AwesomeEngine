@@ -5,5 +5,6 @@
 namespace Awe {
 
 	void Print();
+	void Run();
 
 }

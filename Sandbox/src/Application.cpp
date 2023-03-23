@@ -6,6 +6,7 @@
 int main(int argc, char** argv)
 {
 	Awe::Print();
+	Awe::Run();
 
 	return 0;
 }
