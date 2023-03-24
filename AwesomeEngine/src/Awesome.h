@@ -1,10 +1,9 @@
 #pragma once
 
-#include <Windows.h>
+// to include in client
 
-namespace Awe {
+#include "Application.h"
 
-	void Print();
-	void Run();
+#include "EntryPoint.h"
 
-}
+

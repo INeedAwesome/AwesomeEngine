@@ -211,14 +211,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\pchawe.h" />
     <ClInclude Include="src\Awesome.h" />
-    <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\pchawe.cpp" />
-    <ClCompile Include="src\Awesome.cpp" />
-    <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
