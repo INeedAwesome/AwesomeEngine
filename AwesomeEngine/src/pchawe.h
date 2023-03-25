@@ -4,7 +4,10 @@
 #include <Windows.h>
 
 #include <iostream>
-
-
+#include <memory>
+#include <stdint.h>
+#include <utility>
+#include <algorithm>
+#include <functional>
 
 

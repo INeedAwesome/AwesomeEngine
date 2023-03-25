@@ -2,7 +2,7 @@
 
 // to include in client
 
-#include "Application.h"
+#include "Awesome/Application.h"
 
 #include "EntryPoint.h"
 
