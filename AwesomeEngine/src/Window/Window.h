@@ -10,9 +10,19 @@ namespace Awe {
 		Window(const wchar_t* title, uint32_t width, uint32_t height);
 		~Window();
 
-		inline void SetStopProc(std::function<void()> func) { m_StopProcedure = func; }
+		Window(const Window&) = delete;
+
+		static Window& Get() 
+		{ 
+			static Window s_Instance;
+			return s_Instance; 
+		}
+
+		int32_t ShouldClose();
+		HWND GetHWND() { return m_HWND; }
 
 	private:
+		Window() {};
 		const HINSTANCE GetInstance() { return GetModuleHandle(nullptr); }
 		const wchar_t* ClassName() { return L"Awesome_Engine"; }
 
@@ -22,8 +32,7 @@ namespace Awe {
 
 		HWND m_HWND;
 		WNDCLASS m_WndClass = { 0 };
-		std::function<void()> m_StopProcedure;
-		
+
 	};
 
 	LRESULT WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);

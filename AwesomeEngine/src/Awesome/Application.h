@@ -19,7 +19,6 @@ namespace Awe {
 
 	};
 
-
 	// define in client
 	Application* CreateApplication();
 }

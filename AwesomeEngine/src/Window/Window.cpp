@@ -64,8 +64,22 @@ namespace Awe {
 		std::cout << "window destruct" << std::endl;
 
 		UnregisterClass(ClassName(), GetInstance());
-		PostQuitMessage(0);
-		m_StopProcedure();
+	}
+
+	int32_t Window::ShouldClose()
+	{
+		MSG msg = { };
+		while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) > 0)
+		{
+			if (msg.message == WM_QUIT)
+			{
+				return 1;
+			}
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		return 0;
 	}
 
 	LRESULT WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

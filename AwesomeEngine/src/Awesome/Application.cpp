@@ -11,11 +11,9 @@ namespace Awe {
 
 		// Init window
 		m_Window = new Awe::Window(L"Want some extra juice!", 1280, 720);
-		m_Window->SetStopProc([this]() {
-			this->SetRunning(0);
-		});
 
 		// init graphics api
+
 		// init some extra
 	}
 
@@ -28,16 +26,13 @@ namespace Awe {
 	{
 		while (m_Running)
 		{
-			MSG msg = { };
-			while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) > 0)
+			if (m_Window->ShouldClose())
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				std::cout << "Closing Window!" << std::endl;
+				m_Running = false;
 			}
+
+			Sleep(2);
 		}
 	}
-
-	
-
-
 }

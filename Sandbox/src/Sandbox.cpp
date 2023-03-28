@@ -2,7 +2,7 @@
 
 Sandbox::Sandbox()
 {
-
+	std::cout << "From sandbox" << std::endl;
 }
 
 Sandbox::~Sandbox()
