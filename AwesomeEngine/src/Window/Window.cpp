@@ -3,46 +3,50 @@
 
 namespace Awe {
 
-	Window::Window(const wchar_t* title, uint32_t width, uint32_t height, WNDPROC windowProcedure)
-		: m_Title(title), m_Width(width), m_Height(height), m_HWND(nullptr), m_Running(0x00), m_WindowProcedure(windowProcedure)
+	Window::Window(const wchar_t* title, uint32_t width, uint32_t height)
+		: m_Title(title), m_Width(width), m_Height(height), m_HWND(nullptr)
 	{
 		std::cout << "window init" << std::endl;
-	}
 
-	Window::~Window()
-	{
-		std::cout << "window destruct" << std::endl;
-	}
-
-	void Window::Open()
-	{
 		{
-			wc.style = 0;
-			wc.lpfnWndProc = m_WindowProcedure;
-			wc.cbClsExtra = 0;
-			wc.cbWndExtra = 0;
-			wc.hInstance = GetInstance();
-			wc.hIcon = 0;
-			wc.hCursor = 0;
-			wc.hbrBackground = 0;
-			wc.lpszMenuName = 0;
-			wc.lpszClassName = ClassName();
+			m_WndClass.style = 0;
+			m_WndClass.lpfnWndProc = WindowProcedure;
+			m_WndClass.cbClsExtra = 0;
+			m_WndClass.cbWndExtra = 0;
+			m_WndClass.hInstance = GetInstance();
+			m_WndClass.hIcon = 0;
+			m_WndClass.hCursor = 0;
+			m_WndClass.hbrBackground = 0;
+			m_WndClass.lpszMenuName = 0;
+			m_WndClass.lpszClassName = ClassName();
+			
+			RegisterClass(&m_WndClass);
+		}
+		
+		DWORD style = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+
+		RECT rect;
+		{
+			rect.left = 250;
+			rect.top = 250;
+			rect.right = rect.left + m_Width;
+			rect.bottom = rect.top + m_Height;
 		}
 
-		RegisterClass(&wc);
+		AdjustWindowRect(&rect, style, false);
 
 		m_HWND = CreateWindowEx(
-			/*extra styles*/ 0, 
+			/*extra styles*/ 0,
 			/*class name*/ ClassName(),
 			/*title*/ m_Title,
-			/*style*/ 0,
-			/*pos x*/ CW_USEDEFAULT,
-			/*pos y*/ CW_USEDEFAULT,
-			/*size x*/ CW_USEDEFAULT,
-			/*size y*/ CW_USEDEFAULT,
+			/*style*/ style,
+			/*pos x*/ rect.left,
+			/*pos y*/ rect.top,
+			/*size x*/ rect.right - rect.left,
+			/*size y*/ rect.bottom - rect.top,
 			/*hwnd parent*/ 0,
 			/*hMenu*/ 0,
-			/*hInstance*/ 0,
+			/*hInstance*/ GetInstance(),
 			/*lpParam*/ 0
 		);
 
@@ -53,17 +57,36 @@ namespace Awe {
 		}
 
 		ShowWindow(m_HWND, SW_SHOW);
-
 	}
-
-	void Window::Close()
+	
+	Window::~Window()
 	{
-		DestroyWindow(m_HWND);
+		std::cout << "window destruct" << std::endl;
+
 		UnregisterClass(ClassName(), GetInstance());
 		PostQuitMessage(0);
-		*m_Running = 0;
+		m_StopProcedure();
 	}
 
+	LRESULT WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		switch (message)
+		{
+		case WM_CLOSE:
+		{
+			if (MessageBox(hwnd, L"Really quit?", L"Awesome Engine.", MB_OKCANCEL) == IDOK)
+			{
+				DestroyWindow(hwnd);
+			}
+		}
+		case WM_DESTROY:
+		{
+			PostQuitMessage(0);
+		}
 
+		default:
+			return DefWindowProc(hwnd, message, wParam, lParam);
+		}
+	}
 
 }

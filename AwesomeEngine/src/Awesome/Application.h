@@ -11,14 +11,14 @@ namespace Awe {
 		virtual ~Application();
 
 		void Run();
+		void SetRunning(int32_t run) { m_Running = run; }
 
 	private:
+		Awe::Window* m_Window;
 		int32_t m_Running;
 
-		Awe::Window* m_Window;
 	};
 
-	LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// define in client
 	Application* CreateApplication();

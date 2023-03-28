@@ -5,17 +5,15 @@
 
 namespace Awe {
 
-
 	Application::Application()
 	{
-		m_Running = 1;
+		this->SetRunning(1);
+
 		// Init window
-		m_Window = new Awe::Window(L"Want some extra juice!", 1280, 720, WindowProcedure);
-		m_Window->Open(); // WIP
-		m_Window->SetStopProcedure(m_Running);
-
-		m_Window->Close();
-
+		m_Window = new Awe::Window(L"Want some extra juice!", 1280, 720);
+		m_Window->SetStopProc([this]() {
+			this->SetRunning(0);
+		});
 
 		// init graphics api
 		// init some extra
@@ -31,7 +29,7 @@ namespace Awe {
 		while (m_Running)
 		{
 			MSG msg = { };
-			while (GetMessage(&msg, NULL, 0, 0) > 0)
+			while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) > 0)
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
@@ -39,22 +37,7 @@ namespace Awe {
 		}
 	}
 
+	
 
-	LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-	{
-		switch (message)
-		{
-		case WM_CLOSE:
-		{
-			if (MessageBox(hwnd, L"Really quit?", L"Awesome Engine.", MB_OKCANCEL) == IDOK)
-			{
-				PostQuitMessage(0);
-			}
-		}
-
-		default:
-			return DefWindowProc(hwnd, message, wParam, lParam);
-		}
-	}
 
 }
