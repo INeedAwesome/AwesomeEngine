@@ -6,8 +6,6 @@ namespace Awe {
 	Window::Window(const wchar_t* title, uint32_t width, uint32_t height)
 		: m_Title(title), m_Width(width), m_Height(height), m_HWND(nullptr)
 	{
-		std::cout << "window init" << std::endl;
-
 		{
 			m_WndClass.style = 0;
 			m_WndClass.lpfnWndProc = WindowProcedure;
@@ -61,8 +59,6 @@ namespace Awe {
 	
 	Window::~Window()
 	{
-		std::cout << "window destruct" << std::endl;
-
 		UnregisterClass(ClassName(), GetInstance());
 	}
 

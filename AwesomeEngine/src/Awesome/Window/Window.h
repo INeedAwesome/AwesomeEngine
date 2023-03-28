@@ -3,7 +3,6 @@
 
 namespace Awe {
 
-	
 	class Window
 	{
 	public:
