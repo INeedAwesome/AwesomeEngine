@@ -215,12 +215,12 @@
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\pchawe.h" />
     <ClInclude Include="src\Awesome.h" />
-    <ClInclude Include="src\Window\Window.h" />
+    <ClInclude Include="src\Awesome\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Awesome\Application.cpp" />
     <ClCompile Include="src\pchawe.cpp" />
-    <ClCompile Include="src\Window\Window.cpp" />
+    <ClCompile Include="src\Awesome\Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
